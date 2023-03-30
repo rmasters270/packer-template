@@ -1,0 +1,23 @@
+#cloud-config
+datasource_list: [NoCloud, ConfigDrive]
+
+timezone: {{ timezone }}
+
+system_info:
+  default_user:
+    gecos: cloud-init default
+
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+growpart:
+  mode: auto
+  devices: ['/dev/sda3']
+
+runcmd:
+  - date > /etc/birth_certificate
+  - netplan apply
+  - pvresize /dev/sda3
+  - lvm lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+  - resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv

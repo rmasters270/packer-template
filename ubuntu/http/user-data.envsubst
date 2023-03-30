@@ -1,0 +1,13 @@
+#cloud-config
+autoinstall:
+  version: 1
+  early-commands:
+    - systemctl stop ssh
+  identity:
+    hostname: ubuntu-template
+    username: ${PKR_VAR_SSH_USER}
+    password: ${SSH_PASSWORD_HASH}
+  packages:
+    - qemu-guest-agent
+  ssh:
+    install-server: true
