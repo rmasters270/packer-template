@@ -4,7 +4,7 @@ Create a Proxmox templates using Packer
 
 ## Build Image Template with Script
 
-### Validate Ubuntu 20.04**
+### Validate Ubuntu 20.04
 
 ```shell
 ./packer.sh --os ubuntu -os-version '20.04'
