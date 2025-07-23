@@ -28,7 +28,7 @@ The script, `packer.sh` uses SOPS and AGE to decrypt secrets.  To use this funct
 
 1. Install SOPS
 2. Install AGE
-3. Generage an AGE key
+3. Generate an AGE key
 4. Set `SOPS_AGE_KEY_FILE` environment variable equal to the AGE key path.
 
 The script will look for secrets in `proxmox.secrets.env` and `${OS}-${OS_VERSION}.secrets.env`.
