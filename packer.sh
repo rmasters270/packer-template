@@ -43,7 +43,7 @@ test_sops(){
 while [ $# -gt 0 ] ; do
     case $1 in
         --build | build) build="true" ;;
-        --build-option) options="$2"; shift ;;
+        --build-options) options="$2"; shift ;;
         --help | -h) help;;
         --log | -l) log="$2"; shift ;;
         --os) os="$2"; shift ;;
