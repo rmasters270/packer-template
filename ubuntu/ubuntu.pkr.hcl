@@ -1,7 +1,7 @@
 packer {
   required_plugins {
     proxmox = {
-      version = " >= 1.1.2"
+      version = " >= 1.2.2"
       source  = "github.com/hashicorp/proxmox"
     }
     ansible = {
@@ -20,11 +20,6 @@ source "proxmox-iso" "ubuntu" {
   token                     = var.proxmox_token
   insecure_skip_tls_verify  = true
 
-  iso_url                   = var.iso
-  iso_checksum              = var.iso_checksum
-  iso_storage_pool          = var.iso_storage_pool
-  unmount_iso               = true
-
   vm_id                     = var.vmid
   vm_name                   = var.template_name
   template_description      = var.template_description
@@ -42,6 +37,13 @@ source "proxmox-iso" "ubuntu" {
     disk_size               = var.disk_size
     storage_pool            = var.disk_pool
     format                  = "raw"
+  }
+  boot_iso {
+    type                    = "scsi"
+    iso_url                 = var.iso
+    iso_checksum            = var.iso_checksum
+    iso_storage_pool        = var.iso_storage_pool
+    unmount                 = true
   }
   network_adapters {
     model                   = "virtio"
