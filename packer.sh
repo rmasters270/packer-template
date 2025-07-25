@@ -102,14 +102,9 @@ elif [ "$(test_sops "$proxmox")" = "false" ]; then
     export $(grep -v "^#" $proxmox | xargs)
 fi
 
-# If PKR_VAR_SSH_PASSWORD exist create a hashed password with Python.
+# If PKR_VAR_SSH_PASSWORD exist create a hashed password with OpenSSL.
 if [ -n "$PKR_VAR_SSH_PASSWORD" ]; then
-    command -v python3 > /dev/null || error_handler "Python 3 not installed." $LINENO
-    python3 -c "import passlib" &> /dev/null || error_handler "Python package passlib is not installed." $LINENO
-
-    export SSH_PASSWORD_HASH=$(python3 -c "\
-from passlib.hash import sha512_crypt; \
-print(sha512_crypt.hash('$PKR_VAR_SSH_PASSWORD'))")
+    export SSH_PASSWORD_HASH=$(openssl passwd -6 "$PKR_VAR_SSH_PASSWORD")
 fi
 
 # Any files with .envsubst file extension will undergo environment variable replacment.
