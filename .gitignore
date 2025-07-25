@@ -1,2 +1,5 @@
+downloaded_iso_path/
+*.log
 *.decrypted~*
 **/http/user-data
+.ansible
