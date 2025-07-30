@@ -21,8 +21,6 @@ growpart:
 runcmd:
   - date > /etc/birth_certificate
   - netplan apply
-  - IF=$(ip route | awk '/default/ {print $5}')
-  - dhclient -r $IF && dhclient -v $IF
   - pvresize /dev/sda3
   - lvm lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
   - resize2fs -p /dev/mapper/ubuntu--vg-ubuntu--lv
