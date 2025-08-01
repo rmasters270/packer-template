@@ -36,11 +36,13 @@ The script, `packer.sh` uses SOPS and AGE to decrypt secrets.  To use this funct
 3. Generate an AGE key
 4. Set `SOPS_AGE_KEY_FILE` environment variable equal to the AGE key path.
 
-The script will look for secrets in `proxmox.secrets.env` and `${OS}-${OS_VERSION}.secrets.env`.
+The script will look for secrets in `proxmox.secrets.env`, `${OS}.secrets.env` `${OS}-${OS_VERSION}.secrets.env`.
 
 ## Variable substitution
 
 The `packer.sh` script exports secret variables and uses `envsubst` to replace variables in those files.  Files with the file extension `.envsubst` will have variables, (e.g. `${VARIABLE_NAME}`) replaced.  The new files will include the original file name without the `.envsubst` file extension.
+
+Variables can be defined in multiple `env` files, but the OS version (e.g. `${OS}-${OS_VERSION}.secrets.env`) will supercede entries also defined in OS secrets.
 
 ### Variables
 

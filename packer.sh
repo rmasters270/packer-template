@@ -74,7 +74,8 @@ command -v packer > /dev/null || error_handler "Packer not installed."
 # Define script variables.
 SCRIPTDIR=$(dirname "${BASH_SOURCE[0]}")
 varfile=$SCRIPTDIR/$os/$os-$os_version.pkrvars.hcl
-secrets=$SCRIPTDIR/$os/$os-$os_version.secrets.env
+ossecret=$SCRIPTDIR/$os/$os.secrets.env
+versecret=$SCRIPTDIR/$os/$os-$os_version.secrets.env
 proxmox=$SCRIPTDIR/proxmox.secrets.env
 
 # Throw an error if the given OS and or OS version don't exist.
@@ -82,17 +83,24 @@ proxmox=$SCRIPTDIR/proxmox.secrets.env
 [ -f "$varfile" ] || error_handler "Unsupported OS Version: '$os_version'. Var-file: '$varfile' does not exist."
 
 # Check if the secret files are encrypted.  If they are, verify SOPS and AGE are installed and configured.
-if [ "$(test_sops "$secrets")" = "true" ] && [ "$(test_sops "$proxmox")" = "true" ]; then
+if [ "$(test_sops "$ossecret")" = "true" ] && [ "$(test_sops "$versecret")" = "true" ] && [ "$(test_sops "$proxmox")" = "true" ]; then
     command -v sops > /dev/null || error_handler "SOPS not installed." $LINENO
     command -v age > /dev/null || error_handler "AGE not installed." $LINENO
     [ -n "$SOPS_AGE_KEY_FILE" ] || error_handler "AGE key file variable, SOPS_AGE_KEY_FILE undefined." $LINENO
 fi
 
 # Export OS environment varibles.
-if [ "$(test_sops "$secrets")" = "true" ]; then
-    export $(sops --decrypt --age $(awk '/public key:/{print $NF}' $SOPS_AGE_KEY_FILE) $secrets | grep -v "^#" | xargs)
-elif [ "$(test_sops "$secrets")" = "false" ]; then
-    export $(grep -v "^#" $secrets | xargs)
+if [ "$(test_sops "$ossecret")" = "true" ]; then
+    export $(sops --decrypt --age $(awk '/public key:/{print $NF}' $SOPS_AGE_KEY_FILE) $ossecret | grep -v "^#" | xargs)
+elif [ "$(test_sops "$ossecret")" = "false" ]; then
+    export $(grep -v "^#" $ossecret | xargs)
+fi
+
+# Export OS version environment varibles.
+if [ "$(test_sops "$versecret")" = "true" ]; then
+    export $(sops --decrypt --age $(awk '/public key:/{print $NF}' $SOPS_AGE_KEY_FILE) $versecret | grep -v "^#" | xargs)
+elif [ "$(test_sops "$versecret")" = "false" ]; then
+    export $(grep -v "^#" $versecret | xargs)
 fi
 
 # Export Proxmox environment variables.
