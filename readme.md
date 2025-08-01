@@ -106,3 +106,4 @@ The template, `99_pve.cfg.j2`, defines Cloud Init configuration. The file accomp
 - Grow the partition to fit the disk size assigned in Cloud Init.
 - Apply netplan.
 - Create a birth certificate when child machines are created.
+- Update the hostname file.
