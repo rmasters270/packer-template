@@ -55,6 +55,8 @@ source "proxmox-iso" "ubuntu" {
   ssh_timeout               = "30m"
 
   http_directory            = "${path.root}/http"
+  http_port_min             = var.http_port_min
+  http_port_max             = var.http_port_max
   boot_wait                 = var.boot_wait
   boot_command              = var.boot_command
 }

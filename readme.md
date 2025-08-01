@@ -39,32 +39,34 @@ The `packer.sh` script exports secret variables and uses `envsubst` to replace v
 
 ### Variables
 
-| variable             | default                     | required | description                                       |
-| -------------------- | --------------------------- | -------- | ------------------------------------------------- |
-| proxmox_host         | ${PKR_VAR_PROXMOX_HOST}     | Yes      | Proxmox FQDN host name and port                   |
-| proxmox_node         | ${PKR_VAR_PROXMOX_NODE}     | Yes      | Proxmox node name                                 |
-| proxmox_user         | ${PKR_VAR_PROXMOX_USER}     | Yes      | Proxmox user name                                 |
-| proxmox_password     | ${PKR_VAR_PROXMOX_PASSWORD} | No       | Proxmox password                                  |
-| proxmox_token        | ${PKR_VAR_PROXMOX_TOKEN}    | No       | Proxmox api token                                 |
-| iso                  |                             | Yes      | URL to an ISO which will upload to Proxmox        |
-| iso_checksum         |                             | Yes      | Checksum of the ISO                               |
-| iso_storage_pool     | local                       | No       | Proxmox storage pool to upload the ISO            |
-| vmid                 |                             | No       | Proxmox virtual machine ID                        |
-| template_name        |                             | Yes      | Name of template in Proxmox                       |
-| template_description |                             | No       | Proxmox notes field                               |
-| os                   |                             | Yes      | Operating system type                             |
-| memory               | 1024                        | No       | Memory in MB                                      |
-| cores                | 1                           | No       | Number of CPU cores                               |
-| sockets              | 1                           | No       | Number of CPU sockets                             |
-| disk_size            | 20GB                        | No       | The size of the disk including a unit suffix      |
-| disk_pool            | local-lvm                   | No       | Name of Proxmox storage pool                      |
-| disk_pool_type       | lvm-thin                    | No       | Type of the pool                                  |
-| enable_cloud_init    | False                       | No       | Add Cloud init drive to disk_pool location        |
-| ssh_user             | ${PKR_VAR_SSH_USER}         | No       | SSH user                                          |
-| ssh_password         | ${PKR_VAR_SSH_PASSWORD}     | Yes      | SSH password                                      |
-| boot_wait            | 6s                          | No       | Seconds to wait before entering the boot command. |
-| boot_command         |                             | Yes      | Boot command to auto install Ubuntu               |
-| ansible_inventory    |                             | No       | Path to existing Ansible inventory.               |
+| variable             | default                     | required | description                                      |
+| -------------------- | --------------------------- | -------- | ------------------------------------------------ |
+| proxmox_host         | ${PKR_VAR_PROXMOX_HOST}     | Yes      | Proxmox FQDN host name and port                  |
+| proxmox_node         | ${PKR_VAR_PROXMOX_NODE}     | Yes      | Proxmox node name                                |
+| proxmox_user         | ${PKR_VAR_PROXMOX_USER}     | Yes      | Proxmox user name                                |
+| proxmox_password     | ${PKR_VAR_PROXMOX_PASSWORD} | No       | Proxmox password                                 |
+| proxmox_token        | ${PKR_VAR_PROXMOX_TOKEN}    | No       | Proxmox api token                                |
+| iso                  |                             | Yes      | URL to an ISO which will upload to Proxmox       |
+| iso_checksum         |                             | Yes      | Checksum of the ISO                              |
+| iso_storage_pool     | local                       | No       | Proxmox storage pool to upload the ISO           |
+| vmid                 |                             | No       | Proxmox virtual machine ID                       |
+| template_name        |                             | Yes      | Name of template in Proxmox                      |
+| template_description |                             | No       | Proxmox notes field                              |
+| os                   |                             | Yes      | Operating system type                            |
+| memory               | 1024                        | No       | Memory in MB                                     |
+| cores                | 1                           | No       | Number of CPU cores                              |
+| sockets              | 1                           | No       | Number of CPU sockets                            |
+| disk_size            | 20GB                        | No       | The size of the disk including a unit suffix     |
+| disk_pool            | local-lvm                   | No       | Name of Proxmox storage pool                     |
+| disk_pool_type       | lvm-thin                    | No       | Type of the pool                                 |
+| enable_cloud_init    | False                       | No       | Add Cloud init drive to disk_pool location       |
+| ssh_user             | ${PKR_VAR_SSH_USER}         | No       | SSH user                                         |
+| ssh_password         | ${PKR_VAR_SSH_PASSWORD}     | Yes      | SSH password                                     |
+| http_port_min        | 8305                        | No       | Minimum port number for the Packer HTTP server   |
+| http_port_max        | 8309                        | No       | Maximum port number for the Packer HTTP server   |
+| boot_wait            | 6s                          | No       | Seconds to wait before entering the boot command |
+| boot_command         |                             | Yes      | Boot command to auto install Ubuntu              |
+| ansible_inventory    |                             | No       | Path to existing Ansible inventory               |
 
 #### Additional Variable Information
 

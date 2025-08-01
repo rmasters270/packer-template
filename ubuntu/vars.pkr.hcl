@@ -126,6 +126,16 @@ variable "ssh_password" {
   sensitive = true
 }
 
+variable "http_port_min" {
+  type        = number
+  description = "Minimum port number for the Packer HTTP server"
+  default     = 8305
+}
+variable "http_port_max" {
+  type        = number
+  description = "Maximum port number for the Packer HTTP server"
+  default     = 8309
+}
 variable "boot_wait" {
   type        = string
   description = "Seconds to wait before entering the boot command."
