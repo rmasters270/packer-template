@@ -72,6 +72,7 @@ build {
     ]
     extra_arguments = [
       "--extra-vars", "ansible_become_pass=${var.ssh_password}",
+      "--extra-vars", "ansible_python_interpreter=/usr/bin/python3",
     ]
   }
 }
