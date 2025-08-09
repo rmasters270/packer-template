@@ -1,0 +1,49 @@
+# Locale, keyboard and timezone
+d-i debian-installer/locale string en_US.UTF-8
+d-i keyboard-configuration/xkb-keymap select us
+d-i time/zone string UTC
+d-i clock-setup/utc boolean true
+d-i clock-setup/ntp boolean true
+
+# Network configuration
+d-i netcfg/choose_interface select auto
+d-i netcfg/get_hostname string debian-template
+d-i netcfg/get_domain string local
+
+# Account Setup
+d-i passwd/root-password-crypted password ${SSH_PASSWORD_HASH}
+d-i passwd/make-user boolean false
+
+# Partitioning (use entire disk with LVM)
+d-i partman-auto/method string lvm
+d-i partman-lvm/device_remove_lvm boolean true
+d-i partman-md/device_remove_md boolean true
+d-i partman-lvm/confirm boolean true
+d-i partman-lvm/confirm_nooverwrite boolean true
+d-i partman-auto/choose_recipe select atomic
+d-i partman-auto-lvm/guided_size string max
+d-i partman/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+
+# Package selection
+tasksel tasksel/first multiselect standard, ssh-server
+d-i pkgsel/include string qemu-guest-agent cloud-init cloud-guest-utils lvm2 e2fsprogs
+d-i pkgsel/upgrade select none
+
+# Avoid popularity contest prompt
+popularity-contest popularity-contest/participate boolean false
+
+# Boot loader
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean false
+d-i grub-installer/bootdev string /dev/sda
+
+# Finish installation
+d-i finish-install/reboot_in_progress note
+
+# Late Commands
+# Enable root SSH login for Packer provisioning (reverts via cloud-init later)
+d-i preseed/late_command string in-target \
+    sed -i 's/^#\?PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config
