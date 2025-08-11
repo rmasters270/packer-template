@@ -5,6 +5,7 @@ Create a Proxmox templates using Packer
 ## Supported Builds
 
 - Debian 12
+- Debian 13
 - Ubuntu 20.04
 - Ubuntu 22.04
 - Ubuntu 24.04
